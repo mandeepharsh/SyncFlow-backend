@@ -9,9 +9,9 @@ exports.up = function(knex) {
       table.boolean('received').defaultTo(false);
       table.date('receive_date').nullable();
       table.integer('work_order_id').unsigned().notNullable();
-      table.foreign('work_order_id').references('work_order_id').inTable('WorkOrder');
+      table.foreign('work_order_id').references('work_order_id').inTable('WorkOrder').onDelete('CASCADE');
       table.integer('location_id').unsigned().nullable();
-      table.foreign('location_id').references('location_id').inTable('Location');
+      table.foreign('location_id').references('location_id').inTable('Location').onDelete('CASCADE');
     });
   };
   

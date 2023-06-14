@@ -6,6 +6,8 @@ exports.up = function(knex) {
       table.string('workoder_Number').notNullable();
       table.string('project_name').notNullable();
       table.string('client_name').notNullable();
+      table.string('details');
+      table.timestamps(true, true); 
     });
   };
   

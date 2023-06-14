@@ -7,6 +7,7 @@ exports.up = function(knex) {
       table.foreign('work_order_id').references('work_order_id').inTable('WorkOrder');
       table.foreign('employee_id').references('employee_id').inTable('Employee');
       table.primary(['work_order_id', 'employee_id']);
+      table.timestamps(true, true);
     });
   };
   
