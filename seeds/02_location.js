@@ -8,6 +8,9 @@ exports.seed = function(knex) {
           {location_id: 4, location: 'D'},
           {location_id: 5, location: 'E'},
           {location_id: 6, location: 'F'},
+          {location_id: 7, location: 'G'},
+          {location_id: 8, location: 'H'},
+          {location_id: 9, location: 'I'}
         ]);
       });
   };

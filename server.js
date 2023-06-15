@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors");
 require("dotenv").config();
 
+const workoderRoutes = require("./routes/workOders")
 
 const PORT = process.env.PORT;
 
@@ -10,10 +11,7 @@ const PORT = process.env.PORT;
 app.use(cors());
 app.use(express.json());
 
-
-app.get("/",((req,res) =>{
-  res.json("it is working")
-}))
+app.use("/workoders",workoderRoutes)
 
 
 
