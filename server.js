@@ -12,7 +12,7 @@ const PORT = process.env.PORT;
 app.use(cors());
 app.use(express.json());
 
-app.use("/workoders",workoderRoutes)
+app.use("/workorders",workoderRoutes)
 app.use("/materials",materialsRoutes)
 
 
