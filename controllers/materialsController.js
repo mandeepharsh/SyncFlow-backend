@@ -22,7 +22,8 @@ const updateMaterialStatus = (req,res) =>{
     knex('Material')
     .where('material_id',req.params.id)
     .update({
-        status : req.body.status
+        status : req.body.status,
+        receive_date : new Date()
     })
     .then(() =>{
         return knex('Material')
