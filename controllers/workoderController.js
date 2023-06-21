@@ -11,7 +11,21 @@ const getWorkoders = (req,res) =>{
             'message' : 'workoeorder details are empty'
         })
      }
-   res.status(200).json(workOders)
+     function customizeArray(originalArray) {
+        var resultMap = new Map();
+      
+        originalArray.forEach(function(obj) {
+          if (resultMap.has(obj.work_order_id)) {
+            var existingObj = resultMap.get(obj.work_order_id);
+            existingObj.employee_name += ", " + obj.employee_name;
+          } else {
+            resultMap.set(obj.work_order_id, obj);
+          }
+        });
+      
+        return Array.from(resultMap.values());
+      }  
+   res.status(200).json(customizeArray(workOders))
    })
    .catch((err) =>{
     res.status(500).json({
@@ -34,6 +48,24 @@ const getOneWorkoder = (req,res) =>{
          })
          
       }
+      function customizeArray(originalArray) {
+  var result = [];
+
+  originalArray.forEach(function(obj) {
+    var existingObj = result.find(function(item) {
+      return item.jobNumber === obj.jobNumber;
+    });
+
+    if (existingObj) {
+      existingObj.employeeName += ", " + obj.employeeName;
+    } else {
+      result.push(obj);
+    }
+  });
+
+  return result;
+}
+
     res.status(200).json(workOders)
     })
     .catch((err) =>{
