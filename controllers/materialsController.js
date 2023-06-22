@@ -34,7 +34,31 @@ const updateMaterialStatus = (req,res) =>{
     })
 }
 
-
+const updateMaterialLocation = (req, res) => {
+    knex('Material')
+      .where('material_number', req.params.id)
+      .update({
+        location_id: req.body.location
+      })
+      .then(() => {
+        return knex('Material')
+          .where('material_number', req.params.id)
+          .then((result) => {
+            if (result.length === 0) {
+              throw new Error('Material not found');
+            }
+            console.log(result);
+            res.status(200).json(result[0]);
+          });
+      })
+      .catch((err) => {
+        console.error(err); // Log the error for debugging purposes
+  
+        res.status(500).json({
+          message: 'Internal server error'
+        });
+      });
+  };
 
 
 
@@ -42,6 +66,5 @@ module.exports = {
     getMaterialsWorkoder,
     getMaterials,
     updateMaterialStatus,
-   
-   
+    updateMaterialLocation
 }
