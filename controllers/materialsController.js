@@ -34,8 +34,14 @@ const updateMaterialStatus = (req,res) =>{
     })
 }
 
+
+
+
+
 module.exports = {
     getMaterialsWorkoder,
     getMaterials,
-    updateMaterialStatus
+    updateMaterialStatus,
+   
+   
 }

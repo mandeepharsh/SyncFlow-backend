@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-require("dotenv").config();
 const {getWorkoders , getOneWorkoder} = require("../controllers/workoderController")
 
 router
