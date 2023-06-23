@@ -7,7 +7,7 @@ router.get("/:workOrderId", getMaterialsWorkoder)
 router.get("/", getMaterials)
 router.put("/:id", updateMaterialStatus)
 router.patch("/:id",updateMaterialLocation)
-router.put("/quantity/:id",updateMaterialQuantity)
+router.post("/:id",updateMaterialQuantity)
 
 
 module.exports = router;
