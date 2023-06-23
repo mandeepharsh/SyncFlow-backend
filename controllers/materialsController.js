@@ -47,12 +47,10 @@ const updateMaterialLocation = (req, res) => {
             if (result.length === 0) {
               throw new Error('Material not found');
             }
-            console.log(result);
             res.status(200).json(result[0]);
           });
       })
-      .catch((err) => {
-        console.error(err); // Log the error for debugging purposes
+      .catch(() => {
   
         res.status(500).json({
           message: 'Internal server error'
