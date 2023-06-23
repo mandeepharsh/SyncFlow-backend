@@ -59,10 +59,44 @@ const updateMaterialLocation = (req, res) => {
   };
 
 
+const updateMaterialQuantity = async (req, res) => {
+  const { quantity } = req.body;
+
+  knex('Material')
+    .where('material_id',req.params.id)
+    .then((result) =>{
+      if (result.length === 0) {
+        return res.status(404).send('Material not found');
+      }
+
+      let material = result[0];
+      material.quantity -= quantity;
+
+      if (material.quantity <= 0) {
+        return knex('Material').where('material_id',req.params.id).del();
+      } else {
+        return knex('Material').where('material_id',req.params.id).update({ quantity: material.quantity });
+      }
+    }).then(() =>{
+      return knex('Material').where('material_id',req.params.id)
+    }).then((result) =>{
+      if (result.length === 0) {
+        res.status(200).send('Material successfully deleted');
+      } else {
+        res.json(result);
+      }
+    })
+    .catch((err) =>{
+      res.status(500).json({
+        "msg": err
+      });
+    });
+};
 
 module.exports = {
     getMaterialsWorkoder,
     getMaterials,
     updateMaterialStatus,
-    updateMaterialLocation
+    updateMaterialLocation,
+    updateMaterialQuantity
 }
