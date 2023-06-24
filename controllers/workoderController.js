@@ -35,46 +35,45 @@ const getWorkoders = (req,res) =>{
 } 
 
 
-const getOneWorkoder = (req,res) =>{
-    knex("workorderemployee")
-    .join('workorder','workorder.work_order_id','workorderemployee.work_order_id')
-    .join('employee','employee.employee_id', " workorderemployee.employee_id")
-    .where('workorder.work_order_id', req.params.id)
-    .then((workOders)=>{
-    
-      if(workOders.length === 0){
-         return res.status(400).json({
-             'message' : 'workoeorder not found' 
-         })
-         
-      }
-      function customizeArray(originalArray) {
-  var result = [];
+const getOneWorkoder = async (req, res) => {
+  try {
+    const workOders = await knex('workorderemployee')
+      .join('workorder', 'workorder.work_order_id', 'workorderemployee.work_order_id')
+      .join('employee', 'employee.employee_id', 'workorderemployee.employee_id')
+      .where('workorder.work_order_id', req.params.id);
 
-  originalArray.forEach(function(obj) {
-    var existingObj = result.find(function(item) {
-      return item.jobNumber === obj.jobNumber;
-    });
-
-    if (existingObj) {
-      existingObj.employeeName += ", " + obj.employeeName;
-    } else {
-      result.push(obj);
+    if (workOders.length === 0) {
+      return res.status(400).json({
+        message: 'Work order not found',
+      });
     }
-  });
 
-  return result;
-}
+    function customizeArray(originalArray) {
+      const result = [];
 
-    res.status(200).json(workOders)
-    })
-    .catch((err) =>{
-        console.log(err)
-     res.status(500).json({
-         'err' : "internal server error"
-     })
-    })
-}
+      originalArray.forEach((obj) => {
+        const existingObj = result.find((item) => item.jobNumber === obj.jobNumber);
+
+        if (existingObj) {
+          existingObj.employee_name    += `, ${obj.employee_name          }`;
+        } else {
+          result.push(obj);
+        }
+      });
+
+      return result;
+    }
+
+    const customizedWorkOders = customizeArray(workOders);
+
+    res.status(200).json(customizedWorkOders);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      err: 'Internal server error',
+    });
+  }
+};
 
 module.exports = {
     getWorkoders,

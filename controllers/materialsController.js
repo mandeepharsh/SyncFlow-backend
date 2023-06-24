@@ -90,6 +90,19 @@ const updateMaterialLocation = (req, res) => {
       res.status(500).json({ msg: err.message });
     }
   };
+
+  const getIssuedMaterial = async(_req,res) =>{
+    console.log("something")
+    try {
+      const result = await knex('IssuanceLog')
+      console.log(result)
+      res.json(result)
+    } catch (error) {
+      res.status(500).json({ error: 'An error occurred while fetching the issued material.' });
+    }
+
+
+  }
   
   
 
@@ -98,5 +111,6 @@ module.exports = {
     getMaterials,
     updateMaterialStatus,
     updateMaterialLocation,
-    updateMaterialQuantity
+    updateMaterialQuantity,
+    getIssuedMaterial
 }
