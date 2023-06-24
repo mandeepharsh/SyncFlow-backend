@@ -6,6 +6,7 @@ exports.up = function(knex) {
       table.integer('quantity').notNullable();
       table.string('size').notNullable();
       table.string('receive_date').nullable();
+      table.date('issued_date').nullable()
       table.integer('work_order_id').unsigned().notNullable();
       table.foreign('work_order_id').references('work_order_id').inTable('WorkOrder').onDelete('CASCADE');
     });

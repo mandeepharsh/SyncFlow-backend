@@ -80,6 +80,7 @@ const updateMaterialLocation = (req, res) => {
         quantity: quantity,
         size: size,
         receive_date: receive_date,
+        issued_date :  new Date() ,
         work_order_id: work_order_id
       });
       res.status(200).json({ msg: 'Material issued successfully' });
