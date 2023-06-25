@@ -86,16 +86,13 @@ const updateMaterialLocation = (req, res) => {
       res.status(200).json({ msg: 'Material issued successfully' });
   
     } catch (err) {
-      console.log(err)
       res.status(500).json({ msg: err.message });
     }
   };
 
   const getIssuedMaterial = async(_req,res) =>{
-    console.log("something")
     try {
       const result = await knex('IssuanceLog')
-      console.log(result)
       res.json(result)
     } catch (error) {
       res.status(500).json({ error: 'An error occurred while fetching the issued material.' });
