@@ -60,7 +60,7 @@ const updateMaterialLocation = (req, res) => {
 
 
   const updateMaterialQuantity = async (req, res) => {
-    const { quantity, material_number, size, receive_date, work_order_id } = req.body;
+    const { quantity, material_number, size, issued_employee, work_order_id } = req.body;
   
     try {
       const result = await knex('Material').where('material_id', req.params.id);
@@ -79,8 +79,9 @@ const updateMaterialLocation = (req, res) => {
         material_number: material_number,
         quantity: quantity,
         size: size,
-        receive_date: receive_date,
         issued_date :  new Date() ,
+        issued_time : new Date().toTimeString().slice(0, 8),
+        issued_employee : issued_employee,
         work_order_id: work_order_id
       });
       res.status(200).json({ msg: 'Material issued successfully' });
@@ -97,8 +98,6 @@ const updateMaterialLocation = (req, res) => {
     } catch (error) {
       res.status(500).json({ error: 'An error occurred while fetching the issued material.' });
     }
-
-
   }
   
   
