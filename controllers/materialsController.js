@@ -6,7 +6,12 @@ knex('Material')
 .where(' work_order_id', req.params.workOrderId)
 .then((materials)=>{
    res.status(200).json(materials)
-})
+}).catch(() => {
+  
+  res.status(500).json({
+    message: 'Internal server error'
+  });
+});
 }
 
 
@@ -16,6 +21,12 @@ const getMaterials = (req,res) =>{
 .then((materials)=>{
    res.status(200).json(materials)
 })
+.catch(() => {
+  
+  res.status(500).json({
+    message: 'Internal server error'
+  });
+});
 }
 
 const updateMaterialStatus = (req,res) =>{
@@ -32,6 +43,12 @@ const updateMaterialStatus = (req,res) =>{
     .then((updatedMaterial) =>{
         res.json(updatedMaterial[0])
     })
+     .catch(() => {
+  
+        res.status(500).json({
+          message: 'Internal server error'
+        });
+      });
 }
 
 const updateMaterialLocation = (req, res) => {

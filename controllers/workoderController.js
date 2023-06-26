@@ -6,7 +6,6 @@ const getWorkoders = async (_req, res) => {
       .join('workorder', 'workorder.work_order_id', 'workorderemployee.work_order_id')
       .join('employee', 'employee.employee_id', 'workorderemployee.employee_id')
       .select('*');
-
     if (workOrders.length === 0) {
       return res.status(400).json({
         message: 'Work order details are empty',
@@ -24,7 +23,7 @@ const getWorkoders = async (_req, res) => {
           resultMap.set(obj.work_order_id, obj);
         }
       });
-
+ 
       return Array.from(resultMap.values());
     }
 
