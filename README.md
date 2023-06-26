@@ -26,8 +26,70 @@
 <li>Search Functionality</li>
 </ul><ul>
 <li>Material Issuance and Tracking</li>
-</ul><h5>Steps</h5><ul>
-<li>Clone the Frontend Repository</li>
+## Installation
+
+Clone the Frontend Repository
+Open your terminal/command prompt and clone the repository:
+
+```bash
+ git clone https://github.com/mandeepharsh/SyncFlow-client.git
+```
+
+Clone the Backend Repository
+In a separate directory, clone the backend repository:
+```bash
+ git clone https://github.com/mandeepharsh/SyncFlow-backend.git
+
+```
+Install Dependencies
+
+Navigate to both cloned directories individually and install the required dependencies:
+```bash
+ cd SyncFlow-client
+npm install
+
+```
+And,
+```bash
+cd SyncFlow-backend
+npm install
+```
+
+Setup the Database
+Create a new MySQL database. Update the connection details in the config/db.js file in the backend repository.
+
+Setup Environment Variables
+In the root of the backend repository, create a .env file and fill it with necessary environment variables. These will likely include your database connection information, any API keys, and other confidential data. Refer to the provided .env.example file for guidance.
+
+Run Database Migrations
+In the backend directory, run:
+```bash
+ npm run migrate
+
+```
+Seed the Database
+Populate your database with initial data:
+```bash
+npm run seed
+
+```
+Run the Backend Server
+```bash
+npm run dev
+```
+Run the Frontend
+Navigate to the frontend directory and start the development server:
+```bash
+cd ../SyncFlow-client
+npm run dev
+```
+<h2>Screenshots</h2>
+<h3>DASHBOARD</h3>
+<img width="480" alt="Screenshot 2023-06-26 at 9 10 58 AM" src="https://github.com/mandeepharsh/SyncFlow-client/assets/100046979/2f8b6166-9ef1-4ec2-b844-e0ff72b90217">
+<h3>Geographical Mapping area</h3>
+<img width="480" alt="Screenshot 2023-06-26 at 9 11 27 AM" src="https://github.com/mandeepharsh/SyncFlow-client/assets/100046979/6aa9c8a3-5586-496b-a73f-d2368a1f39b0">
+
+
 </ul><h2>Features that can be added</h2>
 <hr><ul>
 <li>User Access Control: Enhanced user role management and access control functionalities could ensure that users can only access data and functions relevant to their role, thereby increasing security and efficiency.</li>
