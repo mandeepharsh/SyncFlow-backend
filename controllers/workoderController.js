@@ -82,11 +82,7 @@ const getPendingWorkOrders = async(_req,res) =>{
   const workOrders = await knex("workorder")
   .where({"job_started" : 0})
   .select('*');
-  if (workOrders.length === 0) {
-    return res.status(400).json({
-      message: 'Work order not found',
-    });
-  }
+ 
   res.status(200).json(workOrders)  
  } catch (error) {
 
