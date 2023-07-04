@@ -83,9 +83,7 @@ const getPendingWorkOrders = async(_req,res) =>{
   .where({"job_started" : 0})
   .select('*');
   if (workOrders.length === 0) {
-    return res.status(400).json({
-      message: 'Work order not found',
-    });
+    return res.status(200).json([]);
   }
   res.status(200).json(workOrders)  
  } catch (error) {
