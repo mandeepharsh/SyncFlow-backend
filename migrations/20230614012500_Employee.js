@@ -5,6 +5,7 @@ exports.up = function(knex) {
       table.increments('employee_id').primary();
       table.string('employee_name').notNullable();
       table.string('employee_number').notNullable();
+      table.string('employee__role').notNullable();
     });
   };
   

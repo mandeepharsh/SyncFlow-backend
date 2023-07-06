@@ -1,18 +1,70 @@
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const knex = require("knex")(require("../knexfile"));
-
-const getEmployees = async(_req,res) =>{
+require('dotenv').config();
+const getEmployees = async (_req, res) => {
     try {
-        const table =  await knex("employee")
-        if(table.lentgh === 0){
-        res.status(400).json("Employees not found")
+        const table = await knex("employee")
+        if (table.lentgh === 0) {
+            res.status(400).json("Employees not found")
         }
         res.status(200).json(table)
-        
+
     } catch (error) {
         res.status(500).json("Internal server erro")
     }
+}
+
+const userLogin = async (req, res) => {
+    const { username, password } = req.body;
+    if (!username || !password) {
+        return res.status(400).json({
+            msg: "username and password are required"
+        })
     }
-    
-module.exports={
- getEmployees
+
+    try {
+        const table = await knex("users")
+            .join('employee', 'employee. employee_id', 'users.employee_id')
+            .where({user_username: username})
+        if (table.length === 0) {
+            return res.status(404).json({ msg: "Invavlid credentials" });
+        }
+         
+
+        let user = table[0]
+        const match = await bcrypt.compare(password, user.user_hashedPassword);
+
+        if (!match) {
+         return    res.status(401).json({
+                msg: "invalid credentials"
+            })
+        }
+
+        const token = await jwt.sign(
+            {
+                employee_id: user.employee_id,
+                employee_name: user.employee_name,
+                employee_number: user.employee_number,
+                employee__role: user.employee__role
+            },
+            process.env.SECRET_KEY,
+            {
+                expiresIn: 60 * 60 * 24
+            }
+        )
+      
+       res.json({token}) 
+
+    } catch (error) {
+      res.status(500).json({
+        error : error,
+        msg: "internal server error"
+      })
+    }
+}
+
+module.exports = {
+    getEmployees,
+    userLogin
 }
