@@ -41,11 +41,9 @@ const userLogin = async (req, res) => {
             })
         }
 
-        const token = await jwt.sign(
+        const token = jwt.sign(
             {
                 employee_id: user.employee_id,
-                employee_name: user.employee_name,
-                employee_number: user.employee_number,
                 employee__role: user.employee__role
             },
             process.env.SECRET_KEY,
@@ -64,7 +62,10 @@ const userLogin = async (req, res) => {
     }
 }
 
+
+
 module.exports = {
     getEmployees,
-    userLogin
+    userLogin,
+
 }

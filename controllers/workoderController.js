@@ -1,6 +1,7 @@
 const knex = require("knex")(require("../knexfile"));
 
-const getWorkoders = async (_req, res) => {
+const getWorkoders = async (req, res) => {
+  const { employee__role, employee_id } = req.body
   try {
     const workOrders = await knex('workorderemployee')
       .join('workorder', 'workorder.work_order_id', 'workorderemployee.work_order_id')
@@ -11,7 +12,7 @@ const getWorkoders = async (_req, res) => {
         message: 'Work order details are empty',
       });
     }
-
+    
     function customizeArray(originalArray) {
       var resultMap = new Map();
 
@@ -23,12 +24,19 @@ const getWorkoders = async (_req, res) => {
           resultMap.set(obj.work_order_id, obj);
         }
       });
- 
+
       return Array.from(resultMap.values());
     }
 
-    const customizedWorkOrders = customizeArray(workOrders);
-    res.status(200).json(customizedWorkOrders);
+   
+    if (employee__role === "welder") {
+      const customizedWorkOrders = customizeArray(workOrders);
+      const filterdArray = customizedWorkOrders.filter((orders) => orders.employee_id === Number(employee_id))
+      return res.status(200).json(filterdArray);
+    }else {
+      const customizedWorkOrders = customizeArray(workOrders);
+      return res.status(200).json(customizedWorkOrders);
+    }
   } catch (err) {
     res.status(500).json({
       err: 'Internal server error',
@@ -57,7 +65,7 @@ const getOneWorkoder = async (req, res) => {
         const existingObj = result.find((item) => item.jobNumber === obj.jobNumber);
 
         if (existingObj) {
-          existingObj.employee_name    += `, ${obj.employee_name  }`;
+          existingObj.employee_name += `, ${obj.employee_name}`;
         } else {
           result.push(obj);
         }
@@ -77,41 +85,41 @@ const getOneWorkoder = async (req, res) => {
   }
 };
 
-const getPendingWorkOrders = async(_req,res) =>{
- try {
-  const workOrders = await knex("workorder")
-  .where({"job_started" : 0})
-  .select('*');
-  if (workOrders.length === 0) {
-    return res.status(200).json([]);
-  }
-  res.status(200).json(workOrders)  
- } catch (error) {
+const getPendingWorkOrders = async (_req, res) => {
+  try {
+    const workOrders = await knex("workorder")
+      .where({ "job_started": 0 })
+      .select('*');
+    if (workOrders.length === 0) {
+      return res.status(200).json([]);
+    }
+    res.status(200).json(workOrders)
+  } catch (error) {
 
-  res.json(error)
- }
+    res.json(error)
+  }
 }
 
-const startWorkOrder = async(req, res) => {
+const startWorkOrder = async (req, res) => {
   try {
     await knex('workorder')
       .where('work_order_id', req.body.work_order_id)
       .update({ job_started: true });
-  
+
     const workOrderEmployeeExists = await knex('workorderemployee')
-      .where({ 
-        work_order_id: req.body.work_order_id, 
-        employee_id: req.body.employee_id 
+      .where({
+        work_order_id: req.body.work_order_id,
+        employee_id: req.body.employee_id
       })
       .first();
 
     if (!workOrderEmployeeExists) {
-      await knex('workorderemployee').insert({ 
-        work_order_id: req.body.work_order_id, 
-        employee_id: req.body.employee_id 
+      await knex('workorderemployee').insert({
+        work_order_id: req.body.work_order_id,
+        employee_id: req.body.employee_id
       });
     }
-    
+
     res.json("updated")
   } catch (error) {
     console.error(error);
@@ -121,7 +129,7 @@ const startWorkOrder = async(req, res) => {
 
 
 module.exports = {
-    getWorkoders,
-    getOneWorkoder,
-    getPendingWorkOrders,startWorkOrder
-  };
+  getWorkoders,
+  getOneWorkoder,
+  getPendingWorkOrders, startWorkOrder
+};

@@ -6,8 +6,7 @@ router
 .route("/")
 .get(getWorkoders)
 .post(startWorkOrder)
-router.get("/:id/workoder",getOneWorkoder)
-
+router.get("/:id/workoder",getOneWorkoder);
 router.get("/pending",getPendingWorkOrders);
 
 
