@@ -62,10 +62,22 @@ const userLogin = async (req, res) => {
     }
 }
 
+const getUserInfo = (req,res) =>{
+  const employee_id  = req.employee_id;
+  const employee__role =  req.employee__role;
+
+  res.status(200).json({
+    employee_id : employee_id,
+    employee__role : employee__role
+  })
+
+}
+
 
 
 module.exports = {
     getEmployees,
     userLogin,
+    getUserInfo
 
 }

@@ -1,7 +1,8 @@
 const knex = require("knex")(require("../knexfile"));
 
 const getWorkoders = async (req, res) => {
-  const { employee__role, employee_id } = req.body
+  const { employee__role, employee_id } = req
+  console.log(employee__role, employee_id )
   try {
     const workOrders = await knex('workorderemployee')
       .join('workorder', 'workorder.work_order_id', 'workorderemployee.work_order_id')
@@ -30,9 +31,10 @@ const getWorkoders = async (req, res) => {
 
    
     if (employee__role === "welder") {
-      const customizedWorkOrders = customizeArray(workOrders);
-      const filterdArray = customizedWorkOrders.filter((orders) => orders.employee_id === Number(employee_id))
-      return res.status(200).json(filterdArray);
+     
+      const filterdArray = workOrders.filter((orders) => orders.employee_id === Number(employee_id))
+      const customizedWorkOrders = customizeArray(filterdArray);
+      return res.status(200).json(customizedWorkOrders);
     }else {
       const customizedWorkOrders = customizeArray(workOrders);
       return res.status(200).json(customizedWorkOrders);
