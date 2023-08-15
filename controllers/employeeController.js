@@ -11,7 +11,7 @@ const getEmployees = async (_req, res) => {
         res.status(200).json(table)
 
     } catch (error) {
-        res.status(500).json("Internal server erro")
+        res.status(500).json("Internal server error")
     }
 }
 
