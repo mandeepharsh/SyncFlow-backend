@@ -3,3 +3,4 @@ DB_HOST=127.0.0.1
 DB_NAME=capstone
 DB_USER=root
 DB_PASSWORD=rootroot
+SECRET_KEY= /INPUT alphanumeric 32 digit encryption key"
