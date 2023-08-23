@@ -2,7 +2,6 @@ const knex = require("knex")(require("../knexfile"));
 
 const getWorkoders = async (req, res) => {
   const { employee__role, employee_id } = req
-  console.log(employee__role, employee_id )
   try {
     const workOrders = await knex('workorderemployee')
       .join('workorder', 'workorder.work_order_id', 'workorderemployee.work_order_id')
