@@ -40,11 +40,11 @@ const userLogin = async (req, res) => {
                 msg: "invalid credentials"
             })
         }
-
         const token = jwt.sign(
             {
                 employee_id: user.employee_id,
-                employee__role: user.employee__role
+                employee__role: user.employee__role,
+                employee_name : user.employee_name
             },
             process.env.SECRET_KEY,
             {
@@ -65,10 +65,12 @@ const userLogin = async (req, res) => {
 const getUserInfo = (req,res) =>{
   const employee_id  = req.employee_id;
   const employee__role =  req.employee__role;
-
+  const employee_name = req.employee_name ; 
+  console.log(employee_name)
   res.status(200).json({
     employee_id : employee_id,
-    employee__role : employee__role
+    employee__role : employee__role,
+    employee_name : employee_name
   })
 
 }

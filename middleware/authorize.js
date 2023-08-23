@@ -23,7 +23,7 @@ const authorize = (req, res, next) => {
 
            req.employee_id = decoded.employee_id;
            req.employee__role = decoded.employee__role;
-           
+           req.employee_name = decoded.employee_name
             next();
         }
     );
