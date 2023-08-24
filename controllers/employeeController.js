@@ -28,16 +28,15 @@ const userLogin = async (req, res) => {
             .join('employee', 'employee. employee_id', 'users.employee_id')
             .where({user_username: username})
         if (table.length === 0) {
-            return res.status(404).json({ msg: "Invavlid credentials" });
+            return res.status(404).json({ msg: "Invalid credentials" });
         }
          
-
         let user = table[0]
         const match = await bcrypt.compare(password, user.user_hashedPassword);
 
         if (!match) {
          return    res.status(401).json({
-                msg: "invalid credentials"
+                msg: "Invalid credentials"
             })
         }
         const token = jwt.sign(
@@ -66,7 +65,6 @@ const getUserInfo = (req,res) =>{
   const employee_id  = req.employee_id;
   const employee__role =  req.employee__role;
   const employee_name = req.employee_name ; 
-  console.log(employee_name)
   res.status(200).json({
     employee_id : employee_id,
     employee__role : employee__role,
