@@ -4,6 +4,7 @@ exports.up = function(knex) {
         table.increments('user_id').primary();
         table.string('user_username').notNullable();
         table.string('user_hashedPassword').notNullable();
+        table.string('user_refreshToken');        
         table.integer("employee_id").unsigned().notNullable();
         table.foreign("employee_id").references('employee_id').inTable("Employee");
       });
