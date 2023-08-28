@@ -9,15 +9,17 @@ const workoderRoutes = require("./routes/workOders");
 const materialsRoutes = require("./routes/materials");
 const locationRoutes = require("./routes/location");
 const employeeRoutes = require("./routes/employee");
-const authRoutes = require("./routes/auth");
+const loginRoutes = require("./routes/auth");
+const logoutRoutes = require("./routes/logout");
 const PORT = process.env.PORT;
 
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/auth", authRoutes);
+app.use("/login", loginRoutes);
 app.use("/refresh", refreshRoutes);
+app.use("/logout", logoutRoutes);
 
 app.use("/workorders", workoderRoutes);
 app.use("/materials", materialsRoutes);

@@ -39,7 +39,7 @@ const handleLogin = async (req, res) => {
       },
       process.env.SECRET_KEY,
       {
-        expiresIn: "15 min",
+        expiresIn: "10s",
       }
     );
 
@@ -57,6 +57,8 @@ const handleLogin = async (req, res) => {
       .where({ user_username: username })
       .update({ user_refreshToken: refreshToken });
 
+    // Set refreshToken as cookie because it is httpOnly adn can't be accessed using JS,
+    // It increases security
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000,

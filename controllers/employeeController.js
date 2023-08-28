@@ -5,7 +5,7 @@ require("dotenv").config();
 const getEmployees = async (_req, res) => {
   try {
     const table = await knex("employee");
-    if (table.lentgh === 0) {
+    if (table.length === 0) {
       res.status(400).json("Employees not found");
     }
     res.status(200).json(table);
