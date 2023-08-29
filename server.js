@@ -11,9 +11,16 @@ const locationRoutes = require("./routes/location");
 const employeeRoutes = require("./routes/employee");
 const loginRoutes = require("./routes/auth");
 const logoutRoutes = require("./routes/logout");
+const corsOption = require("./config/corsOption");
+const credentials = require("./middleware/credentials");
 const PORT = process.env.PORT;
 
-app.use(cors());
+// Handle options credientials check - before cors
+// and fethc cookies credientials requirement
+app.use(credentials);
+
+// cross origin resource sharing
+app.use(cors(corsOption));
 app.use(express.json());
 app.use(cookieParser());
 
