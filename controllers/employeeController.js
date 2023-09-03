@@ -76,7 +76,6 @@ const getUserInfo = async (req, res) => {
       employee_id: employee_id,
       name: employee_name,
     };
-    console.log(userInfo);
     res.json(userInfo);
   } catch (error) {
     res.status(500).json({
