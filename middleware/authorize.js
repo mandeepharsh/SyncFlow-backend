@@ -17,7 +17,7 @@ const authorize = (req, res, next) => {
         message: "Invalid JWT",
       });
     }
-    (req.username = decoded.username), console.log(req.username);
+    req.username = decoded.username;
     next();
   });
 };

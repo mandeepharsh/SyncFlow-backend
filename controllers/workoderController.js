@@ -1,7 +1,7 @@
 const knex = require("knex")(require("../knexfile"));
 
 const getWorkoders = async (req, res) => {
-  const { employee__role, employee_id } = req;
+  const { username } = req;
   try {
     const workOrders = await knex("workorderemployee")
       .join(
@@ -16,7 +16,6 @@ const getWorkoders = async (req, res) => {
         message: "Work order details are empty",
       });
     }
-    console.log(workOrders);
     function customizeArray(originalArray) {
       var resultMap = new Map();
 
@@ -32,7 +31,13 @@ const getWorkoders = async (req, res) => {
       return Array.from(resultMap.values());
     }
 
-    if (employee__role === "welder") {
+    const user = await knex("employee")
+      .where(" employee_number", username)
+      .select("employee_role", "employee_id");
+    const employee_role = user[0].employee_role;
+    const employee_id = user[0].employee_id;
+
+    if (employee_role === "welder") {
       const filterdArray = workOrders.filter(
         (orders) => orders.employee_id === Number(employee_id)
       );
@@ -43,6 +48,7 @@ const getWorkoders = async (req, res) => {
       return res.status(200).json(customizedWorkOrders);
     }
   } catch (err) {
+    console.log(err);
     res.status(500).json({
       err: "Internal server error",
     });

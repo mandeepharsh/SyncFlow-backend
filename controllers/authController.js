@@ -61,9 +61,7 @@ const handleLogin = async (req, res) => {
     // It increases security
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      sameSite: "none",
-      secure: true,
-      maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 1000 * 60 * 60 * 24,
     });
 
     res.json({ token });
