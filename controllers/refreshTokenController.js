@@ -21,7 +21,8 @@ const handleRefreshToken = async (req, res) => {
       return res.sendStatus(403); // Forbidden
     }
 
-    let user = table[0];
+    const user = table[0];
+    const role = user.employee_role;
     jwt.verify(refreshToken, process.env.REFRESH_KEY, (err, decoded) => {
       if (err || decoded.username !== user.user_username) {
         return res.sendStatus(403);
@@ -36,7 +37,7 @@ const handleRefreshToken = async (req, res) => {
         }
       );
 
-      res.json({ token });
+      res.json({ token, role });
     });
   } catch (err) {
     console.log(err);

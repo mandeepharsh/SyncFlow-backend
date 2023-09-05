@@ -14,49 +14,6 @@ const getEmployees = async (_req, res) => {
   }
 };
 
-const userLogin = async (req, res) => {
-  const { username, password } = req.body;
-  if (!username || !password) {
-    return res.status(400).json({
-      msg: "username and password are required",
-    });
-  }
-
-  try {
-    const table = await knex("users")
-      .join("employee", "employee. employee_id", "users.employee_id")
-      .where({ user_username: username });
-    if (table.length === 0) {
-      return res.status(404).json({ msg: "Invalid credentials" });
-    }
-
-    let user = table[0];
-    const match = await bcrypt.compare(password, user.user_hashedPassword);
-
-    if (!match) {
-      return res.status(401).json({
-        msg: "Invalid credentials",
-      });
-    }
-    const token = jwt.sign(
-      {
-        username: user.user_username,
-      },
-      process.env.SECRET_KEY,
-      {
-        expiresIn: 60 * 60 * 24,
-      }
-    );
-
-    res.json({ token });
-  } catch (error) {
-    res.status(500).json({
-      error: error,
-      msg: "internal server error",
-    });
-  }
-};
-
 const getUserInfo = async (req, res) => {
   try {
     const table = await knex("users")
@@ -87,6 +44,5 @@ const getUserInfo = async (req, res) => {
 
 module.exports = {
   getEmployees,
-  userLogin,
   getUserInfo,
 };
