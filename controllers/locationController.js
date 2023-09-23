@@ -10,7 +10,15 @@ const getLocationMaterials = (req, res) => {
     .join("Location", "Location.location_id", "Material.location_id")
     .where("location", req.params.location)
     .then((result) => {
-      res.json(result);
+      const recivedMaterial = result.filter(
+        (material) => material.status === "received"
+      );
+      res.json(recivedMaterial);
+    })
+    .catch(() => {
+      res.status(500).json({
+        message: "Internal server error",
+      });
     });
 };
 
