@@ -1,5 +1,3 @@
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const knex = require("knex")(require("../knexfile"));
 require("dotenv").config();
 const getEmployees = async (_req, res) => {
