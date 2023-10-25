@@ -11,6 +11,8 @@ const locationRoutes = require("./routes/location");
 const employeeRoutes = require("./routes/employee");
 const loginRoutes = require("./routes/auth");
 const logoutRoutes = require("./routes/logout");
+const userRoutes = require("./routes/users");
+const chatRoutes = require("./routes/chat");
 const corsOption = require("./config/corsOption");
 const credentials = require("./middleware/credentials");
 const PORT = process.env.PORT;
@@ -32,6 +34,8 @@ app.use("/workorders", workoderRoutes);
 app.use("/materials", materialsRoutes);
 app.use("/location", locationRoutes);
 app.use("/employee", employeeRoutes);
+app.use("/users", userRoutes);
+app.use("/chat", chatRoutes);
 
 app.listen(PORT, function () {
   console.log(`Server is running on ${PORT}`);
