@@ -9,7 +9,6 @@ exports.up = function (knex) {
     table.boolean("IsGroupChat").notNullable().defaultTo(false);
     table.integer("GroupAdminID").unsigned();
     table.timestamp("CreatedAt").defaultTo(knex.fn.now());
-    table.timestamp("UpdatedAt").defaultTo(knex.fn.now()).alter();
 
     // Define foreign key constraints
     table.foreign("GroupAdminID").references("user_id").inTable("Users");
