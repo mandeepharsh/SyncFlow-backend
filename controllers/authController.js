@@ -5,7 +5,7 @@ require("dotenv").config();
 
 const handleLogin = async (req, res) => {
   const { username, password } = req.body;
-
+  console.log("123");
   // If no username or password is provided
   if (!username || !password) {
     return res.status(400).json({

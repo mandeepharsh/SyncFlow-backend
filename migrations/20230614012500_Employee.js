@@ -6,6 +6,7 @@ exports.up = function (knex) {
     table.string("employee_name").notNullable();
     table.string("employee_number").notNullable();
     table.string("employee_role").notNullable();
+    table.string("profile_picture_url");
   });
 };
 
