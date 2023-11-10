@@ -1,4 +1,4 @@
-export default async function checkAndCreateOneOnOneChat(userID1, userID2) {
+async function checkAndCreateOneOnOneChat(userID1, userID2, knex) {
   function findChatIDForUsers(userID1, userID2, data) {
     const chatIDs = {};
     for (const entry of data) {
@@ -31,3 +31,7 @@ export default async function checkAndCreateOneOnOneChat(userID1, userID2) {
     return newChat[0];
   }
 }
+
+module.exports = {
+  checkAndCreateOneOnOneChat,
+};
